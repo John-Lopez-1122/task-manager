@@ -18,16 +18,16 @@ export default function AddTaskForm({ onAdd }: AddTaskFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
+    <form onSubmit={handleSubmit} className="flex gap-3">
       <input
         value={title}                   /* controlled: value from state */
         onChange={(e) => setTitle(e.target.value)}
         placeholder="New task..."
-        className="flex-1 border rounded px-3 py-2 text-sm"
+        className="flex-1 border-2 border-[#f6a1ff]/50 dark:border-[#1c4cbf] rounded-xl px-4 py-2 text-sm text-gray-800 dark:text-[#b5c6e0] bg-white dark:bg-[#000000] placeholder:text-gray-400 dark:placeholder:text-[#b5c6e0]/50 focus:outline-none focus:border-[#51c3e5] dark:focus:border-[#38b9c6]"
       />
       <button
         type="submit"
-        className="bg-green-700 text-white px-4 py-2 rounded text-sm hover:bg-green-800"
+        className="bg-[#51c3e5] dark:bg-[#38b9c6] hover:bg-[#2aadd4] dark:hover:bg-[#2aadb9] text-white dark:text-[#000000] font-bold px-5 py-2 rounded-xl text-sm transition-colors"
       >Add</button>
     </form>
   );

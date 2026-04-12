@@ -14,7 +14,7 @@ type TaskListProps = {  //  TypeScript requires defined types, this is a copy/pa
 
 export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
   if (tasks.length === 0) {
-    return <p className="text-gray-400 p-4">No tasks yet!</p>;
+    return <p className="text-gray-400 dark:text-[#b5c6e0]/50 p-4">No tasks yet!</p>;
   }
   return (
     <ul className="divide-y">
