@@ -1,7 +1,14 @@
+// ══════════════════════════════════════════════════════
+// COMPONENT: Layout
+// PURPOSE:  Wraps pages in shared structures (such as fonts, HTML and body tags) for consistency
+// TYPE:     Server Component — used for shared page formatting
+// ══════════════════════════════════════════════════════
+
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 
+// The fonts are stored for easier use and page consistency
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -25,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${manrope.variable} h-full`}>
+      {/* childeren represents the currently visited page and is wrapped automatically */}
       <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font-inter)" }}>{children}</body>
     </html>
   );

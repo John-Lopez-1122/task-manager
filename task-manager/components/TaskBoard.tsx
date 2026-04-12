@@ -1,4 +1,11 @@
-// src/components/TaskBoard.js — 'use client' needed for interactivity
+// ══════════════════════════════════════════════════════
+// COMPONENT: TaskBoard
+// PURPOSE:  The biggest part of the app, it saves the local storage
+//           and passes it down to TaskList which is passed down to TaskCard
+//           which comes back to TaskBoard. This also has multiple functions
+//           such as handleToggle, handleDelete, handleAdd and more.
+// TYPE:     Client Component — needs useState + useEffect
+// ══════════════════════════════════════════════════════
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,17 +21,39 @@ type Task = {
 };
 
 export default function TaskBoard() {
+
+  // ── STATE ──
+  // tasks are kept in state so that they are rendered and saved in local storage
+  // The Lazy initializer checks once on mount and thats it
+  // typeof is used to prevent critical hydration errors
   const [tasks, setTasks] = useState<Task[]>(() => {
-    if (typeof window === 'undefined') return []; //guard typeof window: Next.js SSR has no window
-    const saved = localStorage.getItem('tasks'); //Lazy initializer reading once
+    if (typeof window === 'undefined') return [];
+    const saved = localStorage.getItem('tasks');
     return saved ? JSON.parse(saved) : [];
   });
+
+  // Filter is independant from tasks and shouldnt trigger tasks to update.
   const [filter, setFilter] = useState('all');
 
-useEffect(() => { //writes to localstorage
+  // ── EFFECTS ──
+  // useEffect syncs tasks to localstorage
+  // It uses tasks to check if they are synced.
+  useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);         // dependency array — re-runs when tasks changes
+  }, [tasks]);
 
+  // useEffect syncs with document title to change it
+  // Tasks are kept in a dependency array because they need to be counted to reflect in the return function
+  // The return file changes the document title to reflect how many tasks are left
+  useEffect(() => {
+    const active = tasks.filter((t) => !t.done).length;
+    document.title = `${active} tasks remaining`;
+    return () => { document.title = 'Task Manager'; };
+  }, [tasks]);
+
+  // ── DERIVED VALUES ──
+  // They arent kept in state because they can be calculated in tasks
+  //if they were stored in state then they would have to be updated every time
   const completed = tasks.filter((t) => t.done).length;
   const active    = tasks.length - completed;
   const visible   =
@@ -32,30 +61,25 @@ useEffect(() => { //writes to localstorage
     filter === 'done'   ? tasks.filter((t) => t.done) :
                            tasks.filter((t) => !t.done);
 
+  // ── HANDLERS  ──
 
-useEffect(() => { //updates browser title with task count
-    const active = tasks.filter((t) => !t.done).length;
-    document.title = `${active} tasks remaining`;
-    return () => { document.title = 'Task Manager'; }; // cleanup
-  }, [tasks]);
-
-
-function handleToggle(id: string) {
+  // Using map returns a new array and react would notice the change and rerender than if the array was mutated
+  function handleToggle(id: string) {
     setTasks(tasks.map((t) => t.id === id ? { ...t, done: !t.done } : t));
   }
 
-function handleDelete(id: string) { setTasks(tasks.filter((t) => t.id !== id)); }
+  // Filter returns a new array and then react updates and rerenders the page
+  function handleDelete(id: string) { setTasks(tasks.filter((t) => t.id !== id)); }
 
-function handleAdd(title: string) {
-   setTasks([...tasks, { id: crypto.randomUUID(), title, done: false }]);
+  // task.push() would mutate the array but spread would create a new one forcing rerender
+  function handleAdd(title: string) {
+    setTasks([...tasks, { id: crypto.randomUUID(), title, done: false }]);
   }
 
-function handleClearDone() { setTasks(tasks.filter((t) => !t.done)); }
+  // filter returns a new array with only active tasks, if it was set to [] it would wipe every task
+  function handleClearDone() { setTasks(tasks.filter((t) => !t.done)); }
 
-
-
-  const completedCount = tasks.filter((t) => t.done).length;
-
+  // ── RENDER ──
   return (
     <div className="flex gap-6 p-8 min-h-screen">
       {/* Sidebar card — stats and clear button */}
