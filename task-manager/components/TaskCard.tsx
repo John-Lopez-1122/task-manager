@@ -4,9 +4,9 @@
 type TaskCardProps = {  //  TypeScrip requires defined types, this defines the "title" and "done"'s types.
   title: string;
   done: boolean;
-  id: number;
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
+  id: string;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
 };
 
 export default function TaskCard({ title, done, id, onToggle, onDelete }: TaskCardProps) {

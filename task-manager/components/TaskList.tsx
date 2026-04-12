@@ -5,11 +5,11 @@ import TaskCard from './TaskCard';
 
 type TaskListProps = {  //  TypeScript requires defined types, this is a copy/paste from TaskCard.tsx. this defines "tasks" as an array.
   tasks: {
-    id:number; 
-    title: string; 
+    id:string;
+    title: string;
     done: boolean }[];
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
 };
 
 export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
