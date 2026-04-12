@@ -1,4 +1,6 @@
 // src/components/TaskList.js — Server Component
+'use client';
+
 import TaskCard from './TaskCard';
 
 type TaskListProps = {  //  TypeScript requires defined types, this is a copy/paste from TaskCard.tsx. this defines "tasks" as an array.
@@ -6,9 +8,11 @@ type TaskListProps = {  //  TypeScript requires defined types, this is a copy/pa
     id:number; 
     title: string; 
     done: boolean }[];
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
 };
 
-export default function TaskList({ tasks }: TaskListProps) {
+export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
   if (tasks.length === 0) {
     return <p className="text-gray-400 p-4">No tasks yet!</p>;
   }
@@ -16,7 +20,7 @@ export default function TaskList({ tasks }: TaskListProps) {
     <ul className="divide-y">
       {tasks.map((task) => (          // key on the outermost element
         <li key={task.id}>
-          <TaskCard title={task.title} done={task.done} />
+          <TaskCard title={task.title} done={task.done} id={task.id} onToggle={onToggle} onDelete={onDelete}/>
         </li>
       ))}
     </ul>
