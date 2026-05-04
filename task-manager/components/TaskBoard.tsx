@@ -53,7 +53,7 @@ export default function TaskBoard() {
 
   // ── DERIVED VALUES ──
   // They arent kept in state because they can be calculated in tasks
-  //if they were stored in state then they would have to be updated every time
+  // if they were stored in state then they would have to be updated every time
   const completed = tasks.filter((t) => t.done).length;
   const active    = tasks.length - completed;
   const visible   =
@@ -61,7 +61,7 @@ export default function TaskBoard() {
     filter === 'done'   ? tasks.filter((t) => t.done) :
                            tasks.filter((t) => !t.done);
 
-  // ── HANDLERS  ──
+  // ── HANDLERS ──
 
   // Using map returns a new array and react would notice the change and rerender than if the array was mutated
   function handleToggle(id: string) {

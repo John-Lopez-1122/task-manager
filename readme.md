@@ -1,3 +1,18 @@
+Task Manager Project
+
+Description:
+A task manager running on React. Has local storage to remember tasks after refresh and has other quality of life features youll need for a task board.
+
+What I learned:
+I was able to learn alot about color style, setting dark/light modes, persistent storage, and modules that build to bigger modules.
+
+Technology used:
+Next.js
+Tailwind CSS
+localStorage
+React with TypeScript
+Claude Code
+
 Disclaimer:
 readme file is outside of the project due to github pushing the folder and not the contents in the folder. It runs the same but I had to add another readme and clarify if it seemed off compared to others. Please feel free to message me at any time using my email: johnplopez123@gmail.com or through Github. Thank you!
 
